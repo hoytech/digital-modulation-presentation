@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Introduction to Digital Modulation</title>
+<!-- metadata -->
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+
+
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>Introduction to Digital Modulation</h1>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+  <center>
+  <h1 style="font-size: 300%">Introduction to Digital Modulation</h1>
+  <br>
+  <h2>Doug Hoyte</h2>
+  <h2>VE3HOY</h2>
+  </center>
+</div>
+
+
+
+
+
+<div class="slide">
+  <h1>Three broad areas of digital modulation</h1>
+
+  <ul>
+    <li>Amplitude Shift Keying</li>
+    <li>Frequency Shift Keying</li>
+    <li>Phase Shift Keying</li>
+  </ul>
+</div>
+
+
+
+<div class="slide">
+  <h1>Amplitude Modulation</h1>
+  Amplitude modulation works by combining a "signal" with a "carrier" in a non-linear way:
+  <center><img src="output/ask1.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>Slightly Phase-Offset signals</h1>
+  The output includes two signals of slightly different frequency (also known as sidebands):
+  <center><img src="output/ask2.svg"></center>
+</div>
+
+<div class="slide">
+  <h1>Slightly Phase-Offset signals (overlayed)</h1>
+  Notice how the output is at its maximum when the sidebands are in phase and minimum when not (consider also guitar tuning):
+  <center><img src="output/ask2-1.svg"></center>
+</div>
+
+<div class="slide">
+  <h1>Envelope</h1>
+  The original signal is present in the modulated signal as the "envelope". Note that it is shifted up above the X axis (raised):
+  <center><img src="output/ask2-2.svg"></center>
+</div>
+
+
+
+
+<div class="slide">
+  <h1>Morse Code (CW)</h1>
+
+  <ul>
+    <li>Morse code is one of the earliest digital modes</li>
+    <li>Known to hams as CW ("Continuous Wave")</li>
+    <li>Not actually a continuous wave since it is constantly being interrupted</li>
+    <li>Conceptually an oscillator that is turned on and off by a manually-operated switch (key)</li>
+  </ul>
+  <center><img src="img/cw.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>Amplitude Modulation of a digital signal</h1>
+  A simplistic implementation of amplitude-shift keying is directly AM modulating digital information:
+  <center><img src="output/ask3.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>Square waves</h1>
+  The problem with AM modulation of square waves is that square waves contain a theoretically infinite number of harmonics (every 3rd harmonic):
+  <center><img src="output/square-wave.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>Demo: hard keyed morse code</h1>
+  This demo shows a hard-keyed morse code transmission (open fldigi):
+  <pre>
+    perl -I lib -MPDL::Sound -e '$s=PDL::Sound->new; $s->play("cw", 1000, 15, "CQ CQ CQ DE VE3HOY "x10)'
+  </pre>
+</div>
+
+
+
+<div class="slide">
+  <h1>Keying Waveform Shaping</h1>
+  What we need is a way to soften those hard square wave edges:
+  <center><img src="output/shaping1.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>Keying Envelope Steepness</h1>
+  The key shaping function can be thought of as an envelope.<br>
+  The steeper we make it, the closer it becomes to a square wave pulse...
+  <center><img src="output/shaping2.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>CW Shaping</h1>
+  <ul>
+    <li>For hams, how nicely you have shaped your keying envelope contributes to your <i>tone</i></li>
+    <li>Keying hardware has traditionally used RC filters because it's simple to implement</li>
+    <li>RC filters have exponential envelopes instead of gaussian (sinusoidal) so they have sharper edges (but much better than square wave envelopes)</li>
+  </ul>
+</div>
+
+
+<div class="slide">
+  <h1>gaussian minimum shift keying</h1>
+  If the rise and fall edges of a square wave are shaped to the same sinusoidal keying waveform, this is referred to as <i>gaussian minimum shift keying</i> &mdash; the same thing as amplitude modulating a sine wave signal
+  <center><img src="output/ask2-2.svg"></center>
+</div>
+
+
+<div class="slide">
+  <h1>CW Bandwidth</h1>
+  <ul>
+    <li>An unmodulated carrier wave consumes no bandwidth at all (!)</li>
+    <li>Therefore, the bandwidth consumed by a CW transmission depends solely on the keying envelope used</li>
+    <li>Recall from the Amplitude Modulation slides that sinusoidal envelopes consist of two "sideband" signals of slightly different frequencies</li>
+    <li>The bandwidth consumed is the frequency difference between the sidebands of the keying envelope</li>
+  </ul>
+</div>
+
+
+
+<div class="slide">
+  <h1>Frequency-shift keying</h1>
+
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+
+<div class="slide">
+  <h1>Phase-shift keying</h1>
+
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+
+<div class="slide">
+  <h1>Constellation diagrams</h1>
+
+  <ul>
+    <li>The phase properties of a signal are commonly shown on a complex plane known as a "constellation diagram"</li>
+    <li>All points on the circle represent signals of the same power output so any purely phase-modulated signal must only use symbols on this circle</li>
+  </ul>
+
+  <center><img src="img/const.svg"></center>
+</div>
+
+
+
+<div class="slide">
+  <h1>Binary PSK</h1>
+
+  <ul>
+    <li><i>Binary</i> phase-shift keying uses only two signals that are 180 degrees out-of-phase with each-other</li>
+    <li></li>
+  </ul>
+
+  <center><img src="img/const2.svg"></center>
+</div>
+
+
+
+<div class="slide">
+  <h1>Differential Binary PSK</h1>
+
+  <ul>
+    <li><i>Differential</i> binary phase-shift keying is where the actual phase of the original signal is irrelevant</li>
+    <li>The fast that a phase changes or does not change is how a bit is reconstructed</li>
+  </ul>
+
+  <center><img src="img/const3.svg"></center>
+</div>
+
+
+
+<div class="slide">
+  <h1>PSK-31</h1>
+
+  <ul>
+    <li>Popular ham mode: Like a world-wide chatroom &mdash; no internet required</li>
+    <li>A typical evening on 20 meters (14.070150 MHz):</li>
+  </ul>
+  <br>
+  <center><img src="img/fldigi.png"></center>
+</div>
+
+
+<div class="slide">
+  <h1>PSK-31</h1>
+
+  <ul>
+    <li>Several variations available but by far most commonly used is known as PSK-31 (technically DBPSK-31.25)</li>
+    <li>Differential Binary Phase-Shift Keying at 31.25 baud</li>
+    <li>Roughly as fast as most people type</li>
+    <li>31.25 is convenient when using a sample rate of 8000 because the key shaping waveform has a nice even period of 256 samples (32 milliseconds)</li>
+  </ul>
+</div>
+
+
+<div class="slide">
+  <h1>Varicode</h1>
+
+  <ul>
+    <li>PSK-31 uses a custom encoding called "varicode"</li>
+    <li>Like morse code, frequently used symbols have shorter encodings than rare symbols</li>
+    <li>Self-synchronizing: if you lose your place in a stream you can re-synchronize at the next character (like UTF-8)</li>
+    <li>Encoded symbols never contain adjacent 0s (the character separator)</li>
+  </ul>
+
+  <pre>
+      " "    : 1
+      "e"    : 11
+      "t"    : 101
+      "b"    : 1011111
+      "Q"    : 111011101
+      "\xEE" : 101010111101
+  </pre>
+</div>
+
+
+
+
+<div class="slide">
+  <h1>Differential Encoding</h1>
+
+  <ul>
+    <li></li>
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+<div class="slide">
+  <h1>Digital communication over analog media</h1>
+
+  <div>Cool image of a modem handshake by Oona Räisänen:</div>
+
+  <div><center><img src="img/modem-spectrum.jpg"></center></div>
+</div>
+
+
+<div class="slide">
+  <h1>Who cares about modems?</h1>
+
+  <center><img src="img/acoustic-coupler.jpg"></center>
+</div>
+
+
+</div>
+</body>
+</html>
