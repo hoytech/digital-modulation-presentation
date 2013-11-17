@@ -2,6 +2,7 @@ use common::sense;
 
 use PDL;
 use PDL::Graphics::PLplot;
+use PDL::Complex;
 
 
 sub PI () { 3.14159265358979 }
@@ -104,6 +105,7 @@ mkdir('output/');
 
   $pl->stripplots($x, [ $sum, $h5, $h3, $fund ],
                       YLAB => [ 'Square', '5th', '3rd', 'Fund', ],
+                      BOX => [0, 10, -1, 1],
                       COLOR => [qw/BLUE GREEN RED BLACK/]);
 
   $pl->close();
@@ -144,6 +146,37 @@ mkdir('output/');
 
   $pl->xyplot($x, $am, COLOR => 'BLACK');
   $pl->xyplot($x, $signal, COLOR => 'RED');
+
+  $pl->close();
+}
+
+
+
+{
+## FIXME
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/differential.svg');
+  my $x = sequence(1000)/100;
+
+  #my $i = -sin($x) * cos(PI/11) + (0 * i);
+  #my $q = 0 + (sin($x) * sin(PI/11) * i);
+
+  #my $i = (sin($x) * 1)   +   (0 * i);
+  #my $q = (0)   +   (cos($x) * 0 * i);
+
+  my $i = (sin($x) * cos(PI * 0.1))   +   (0 * i);
+  my $q = (0)   +   (cos($x) * sin(PI * 0.1) * i);
+
+  my $sum = $i + $q;
+
+  my $sum = sqrt(re($sum)**2 + im($sum)**2);
+
+  $pl->xyplot($x, $sum, COLOR => 'BLUE', BOX => [0, 10, -1, 1]);
+  $pl->xyplot($x, im($q), COLOR => 'RED');
+  $pl->xyplot($x, re($i), COLOR => 'BLACK');
+
+  #$pl->stripplots($x, [ $sum, im($q), re($i), ],
+  #                    YLAB => [ 'Sum', 'Q', 'I', ],
+  #                    COLOR => [qw/BLUE RED BLACK/]);
 
   $pl->close();
 }

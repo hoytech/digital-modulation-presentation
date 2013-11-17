@@ -49,14 +49,22 @@
 
 
 
+<div class="slide">
+  <h1>Digital Modulation</h1>
+
+  At some level, all digital communication is done over an analog medium
+
+  <center><img src="img/acoustic-coupler.jpg"></center>
+</div>
+
 
 <div class="slide">
   <h1>Three broad areas of digital modulation</h1>
 
   <ul>
-    <li>Amplitude Shift Keying</li>
-    <li>Frequency Shift Keying</li>
-    <li>Phase Shift Keying</li>
+    <li>Amplitude Shift Keying: Morse code</li>
+    <li>Frequency Shift Keying: DTMF, RTTY, MFSK8, Olivia</li>
+    <li>Phase Shift Keying: PSK-31, Wifi, RFID, Bluetooth</li>
   </ul>
 </div>
 
@@ -160,6 +168,19 @@
 
 
 <div class="slide">
+  <h1>Demo: GMSK morse code</h1>
+  This demo shows gaussian minimum-shift keyed morse code transmission (open fldigi):
+  <pre>
+    perl ...
+  </pre>
+  This demo shows 5ms gaussian smooted morse code transmission:
+  <pre>
+    perl ...
+  </pre>
+</div>
+
+
+<div class="slide">
   <h1>CW Bandwidth</h1>
   <ul>
     <li>An unmodulated carrier wave consumes no bandwidth at all (!)</li>
@@ -175,8 +196,11 @@
   <h1>Frequency-shift keying</h1>
 
   <ul>
-    <li></li>
+    <li>Frequency-shift keying (FSK) is to FM modulation as ASK is to AM</li>
+    <li>DTMF (touch-tone) dialing is a familiar example as in the beginning of this cool image of a modem handshake by Oona Räisänen:</li>
   </ul>
+
+  <div><center><img src="img/modem-spectrum.jpg"></center></div>
 </div>
 
 
@@ -193,7 +217,7 @@
   <h1>Constellation diagrams</h1>
 
   <ul>
-    <li>The phase properties of a signal are commonly shown on a complex plane known as a "constellation diagram"</li>
+    <li>The phase properties of a signal are commonly shown on a complex plane called the "I-Q" plane</li>
     <li>All points on the circle represent signals of the same power output so any purely phase-modulated signal must only use symbols on this circle</li>
   </ul>
 
@@ -207,7 +231,7 @@
 
   <ul>
     <li><i>Binary</i> phase-shift keying uses only two signals that are 180 degrees out-of-phase with each-other</li>
-    <li></li>
+    <li>The phases are on the real number-line. 1 is sin(x) and 0 is -sin(x)</li>
   </ul>
 
   <center><img src="img/const2.svg"></center>
@@ -220,11 +244,39 @@
 
   <ul>
     <li><i>Differential</i> binary phase-shift keying is where the actual phase of the original signal is irrelevant</li>
-    <li>The fast that a phase changes or does not change is how a bit is reconstructed</li>
+    <li>The fact that a phase changes or does not change is how a bit is signalled</li>
   </ul>
 
   <center><img src="img/const3.svg"></center>
 </div>
+
+
+
+<div class="slide">
+  <h1>Quadrature PSK</h1>
+
+  <ul>
+    <li><i>Quadrature</i> phase-shift keying uses more symbols than binary PSK</li>
+    <li>Unlike binary PSK it uses the Q axis (Quadrature axis) as well as the I axis (In-Phase axis)</li>
+  </ul>
+
+  <center><img src="img/qpsk.svg"></center>
+</div>
+
+
+
+<!-- FIXME
+<div class="slide">
+  <h1>Differential Binary PSK (2)</h1>
+
+  <ul>
+    <li></li>
+  </ul>
+
+  <center><img src="output/differential.svg"></center>
+</div>
+-->
+
 
 
 
@@ -276,7 +328,7 @@
 
 
 <div class="slide">
-  <h1>Differential Encoding</h1>
+  <h1></h1>
 
   <ul>
     <li></li>
@@ -285,25 +337,11 @@
 
 
 
-
-
-
-
-
 <div class="slide">
   <h1>Digital communication over analog media</h1>
 
-  <div>Cool image of a modem handshake by Oona Räisänen:</div>
-
-  <div><center><img src="img/modem-spectrum.jpg"></center></div>
 </div>
 
-
-<div class="slide">
-  <h1>Who cares about modems?</h1>
-
-  <center><img src="img/acoustic-coupler.jpg"></center>
-</div>
 
 
 </div>
