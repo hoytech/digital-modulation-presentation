@@ -52,9 +52,9 @@ mkdir('output/');
   my $signal2 = sin(10 * $x * 1.1);
   my $sum = $signal1 + $signal2;
 
-  $pl->xyplot($x, $signal1->cat($signal2)->cat($sum), COLOR => 'RED', BOX => [$x->minmax, $sum->minmax]);
-  $pl->xyplot($x, $signal2, COLOR => 'BLUE');
-  $pl->xyplot($x, $sum, COLOR => 'BLACK');
+  $pl->xyplot($x, $signal1->cat($signal2)->cat($sum), COLOR => 'BLACK', BOX => [$x->minmax, $sum->minmax]);
+  $pl->xyplot($x, $signal2, COLOR => 'RED');
+  $pl->xyplot($x, $sum, COLOR => 'BLUE');
 
   $pl->close();
 }
@@ -177,6 +177,20 @@ mkdir('output/');
   #$pl->stripplots($x, [ $sum, im($q), re($i), ],
   #                    YLAB => [ 'Sum', 'Q', 'I', ],
   #                    COLOR => [qw/BLUE RED BLACK/]);
+
+  $pl->close();
+}
+
+
+
+
+{
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,300], FILE => 'output/psk.svg');
+  my $x = sequence(1000)/100;
+
+  my $signal = sin($x->slice('0:479'))->append(sin($x->slice('480:999') + PI));
+
+  $pl->xyplot($x, $signal, COLOR => 'BLACK');
 
   $pl->close();
 }

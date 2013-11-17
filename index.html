@@ -59,27 +59,31 @@
 
 
 <div class="slide">
-  <h1>Three broad areas of digital modulation</h1>
+  <h1>Three techniques of digital modulation</h1>
 
   <ul>
-    <li>Amplitude Shift Keying: Morse code</li>
-    <li>Frequency Shift Keying: DTMF, RTTY, MFSK8, Olivia</li>
+    <li>Amplitude Shift Keying: Morse code, fiber optics</li>
+    <li>Frequency Shift Keying: DTMF, RTTY, MFSK8, Olivia, GSM</li>
     <li>Phase Shift Keying: PSK-31, Wifi, RFID, Bluetooth</li>
   </ul>
+
+  <br><br>
+
+  It is common to combine these techniques. For example, QAM combines ASK and PSK.
 </div>
 
 
 
 <div class="slide">
   <h1>Amplitude Modulation</h1>
-  Amplitude modulation works by combining a "signal" with a "carrier" in a non-linear way:
+  For analog data like voice, amplitude modulation works by combining a "signal" with a "carrier" in a non-linear way:
   <center><img src="output/ask1.svg"></center>
 </div>
 
 
 <div class="slide">
   <h1>Slightly Phase-Offset signals</h1>
-  The output includes two signals of slightly different frequency (also known as sidebands):
+  The output includes two signals of slightly different frequency known as sidebands:
   <center><img src="output/ask2.svg"></center>
 </div>
 
@@ -105,7 +109,7 @@
     <li>Morse code is one of the earliest digital modes</li>
     <li>Known to hams as CW ("Continuous Wave")</li>
     <li>Not actually a continuous wave since it is constantly being interrupted</li>
-    <li>Conceptually an oscillator that is turned on and off by a manually-operated switch (key)</li>
+    <li>Conceptually an oscillator that is turned on and off by a manually-operated switch (a "key")</li>
   </ul>
   <center><img src="img/cw.svg"></center>
 </div>
@@ -113,20 +117,20 @@
 
 <div class="slide">
   <h1>Amplitude Modulation of a digital signal</h1>
-  A simplistic implementation of amplitude-shift keying is directly AM modulating digital information:
+  A simplistic implementation of amplitude-shift keying is on-off keying:
   <center><img src="output/ask3.svg"></center>
 </div>
 
 
 <div class="slide">
   <h1>Square waves</h1>
-  The problem with AM modulation of square waves is that square waves contain a theoretically infinite number of harmonics (every 3rd harmonic):
+  The problem is that square waves contain an infinite number of harmonics (every 3rd). If used as a keying waveform you get infinite sidebands:
   <center><img src="output/square-wave.svg"></center>
 </div>
 
 
 <div class="slide">
-  <h1>Demo: hard keyed morse code</h1>
+  <h1>Demo: on-off keyed morse code</h1>
   This demo shows a hard-keyed morse code transmission (open fldigi):
   <pre>
     perl -I lib -MPDL::Sound -e '$s=PDL::Sound->new; $s->play("cw", 1000, 15, "CQ CQ CQ DE VE3HOY "x10)'
@@ -145,7 +149,7 @@
 <div class="slide">
   <h1>Keying Envelope Steepness</h1>
   The key shaping function can be thought of as an envelope.<br>
-  The steeper we make it, the closer it becomes to a square wave pulse...
+  The steeper we make it, the closer it becomes to a square wave pulse
   <center><img src="output/shaping2.svg"></center>
 </div>
 
@@ -154,8 +158,8 @@
   <h1>CW Shaping</h1>
   <ul>
     <li>For hams, how nicely you have shaped your keying envelope contributes to your <i>tone</i></li>
-    <li>Keying hardware has traditionally used RC filters because it's simple to implement</li>
-    <li>RC filters have exponential envelopes instead of gaussian (sinusoidal) so they have sharper edges (but much better than square wave envelopes)</li>
+    <li>Keying hardware has traditionally used RC filters because they are simple to implement</li>
+    <li>RC filters have exponential envelopes instead of gaussian (sinusoidal) envelopes so they have sharper edges (but still much smoother than square wave envelopes)</li>
   </ul>
 </div>
 
@@ -169,11 +173,11 @@
 
 <div class="slide">
   <h1>Demo: GMSK morse code</h1>
-  This demo shows gaussian minimum-shift keyed morse code transmission (open fldigi):
+  This demo shows gaussian minimum-shift keyed morse code transmission:
   <pre>
     perl ...
   </pre>
-  This demo shows 5ms gaussian smooted morse code transmission:
+  This demo shows 5ms gaussian smoothed morse code transmission:
   <pre>
     perl ...
   </pre>
@@ -183,10 +187,10 @@
 <div class="slide">
   <h1>CW Bandwidth</h1>
   <ul>
-    <li>An unmodulated carrier wave consumes no bandwidth at all (!)</li>
+    <li>An unmodulated carrier wave contains no information and consumes no bandwidth (!)</li>
     <li>Therefore, the bandwidth consumed by a CW transmission depends solely on the keying envelope used</li>
-    <li>Recall from the Amplitude Modulation slides that sinusoidal envelopes consist of two "sideband" signals of slightly different frequencies</li>
-    <li>The bandwidth consumed is the frequency difference between the sidebands of the keying envelope</li>
+    <li>Recall from the Amplitude Modulation slides that sinusoidal envelopes create two "sideband" signals of slightly different frequencies</li>
+    <li>The bandwidth consumed is the frequency difference between the sidebands created by the keying envelope</li>
   </ul>
 </div>
 
@@ -205,11 +209,34 @@
 
 
 <div class="slide">
+  <h1>RTTY</h1>
+
+  <ul>
+    <li>RTTY (Radio-Teletype) is a very old FSK mode that printed digital messages out onto paper</li>
+    <li>Uses the 5-bit Baudot encoding which predates ASCII by many decades</li>
+    <li>Has a "shift to figures" character that changes what the codes mean so numbers and punctuation can be sent, and of course a "shift back to letters" character</li>
+    <li>Still common on amateur bands</li>
+  </ul>
+<div>
+
+<div class="slide">
   <h1>Phase-shift keying</h1>
 
   <ul>
-    <li></li>
+    <li>PSK involves modifying the phase of a carrier but preserving the amplitude and frequency</li>
+    <li>This is an abrupt 180 degree phase-shift:</li>
   </ul>
+
+  <div><center><img src="output/psk.svg"></center></div>
+</div>
+
+
+<div class="slide">
+  <h1>Demo: unsmoothed phase-shift</h1>
+  This demo shows the spectrum of an abrupt phase-shift and how audibly noticeable it is:
+  <pre>
+    perl ...
+  </pre>
 </div>
 
 
@@ -243,8 +270,8 @@
   <h1>Differential Binary PSK</h1>
 
   <ul>
-    <li><i>Differential</i> binary phase-shift keying is where the actual phase of the original signal is irrelevant</li>
-    <li>The fact that a phase changes or does not change is how a bit is signalled</li>
+    <li><i>Differential</i> binary phase-shift keying is where the absolute phase of the original signal is irrelevant</li>
+    <li>The fact that a phase changes or does not change is how symbols are signalled</li>
   </ul>
 
   <center><img src="img/const3.svg"></center>
@@ -284,7 +311,7 @@
   <h1>PSK-31</h1>
 
   <ul>
-    <li>Popular ham mode: Like a world-wide chatroom &mdash; no internet required</li>
+    <li>Popular ham mode: A world-wide chatroom &mdash; no internet required</li>
     <li>A typical evening on 20 meters (14.070150 MHz):</li>
   </ul>
   <br>
@@ -310,8 +337,8 @@
   <ul>
     <li>PSK-31 uses a custom encoding called "varicode"</li>
     <li>Like morse code, frequently used symbols have shorter encodings than rare symbols</li>
-    <li>Self-synchronizing: if you lose your place in a stream you can re-synchronize at the next character (like UTF-8)</li>
     <li>Encoded symbols never contain adjacent 0s (the character separator)</li>
+    <li>Self-synchronizing: if you lose your place in a stream you can re-synchronize at the next character (like UTF-8)</li>
   </ul>
 
   <pre>
@@ -326,9 +353,8 @@
 
 
 
-
 <div class="slide">
-  <h1></h1>
+  <h1>Raised cosine shaping</h1>
 
   <ul>
     <li></li>
@@ -337,10 +363,6 @@
 
 
 
-<div class="slide">
-  <h1>Digital communication over analog media</h1>
-
-</div>
 
 
 
