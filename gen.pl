@@ -194,3 +194,41 @@ mkdir('output/');
 
   $pl->close();
 }
+
+
+
+
+{
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg',
+                                      #BOX => [0.65, 1.0, ],
+                                      PAGESIZE => [800,300],
+                                      FILE => 'output/diode.svg');
+  my $x = 0.8 + sequence(180)/1000;
+
+  my $y = 2 * (10 ** -11) * (exp($x / (1.5 * .0258)) - 1);
+
+  $pl->xyplot($x, $y->cat($x), COLOR => 'BLACK');
+
+  $pl->close();
+}
+
+
+
+
+{
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/modulation-pct.svg');
+  my $x = sequence(1000)/100;
+
+  my $signal = sin(2 * $x);
+  my $carrier = sin(50 * $x);
+
+  my $signal1 = (0.25 * $signal + 0.5) * $carrier;
+  my $signal2 = (0.5 * $signal + 0.5) * $carrier;
+  my $signal3 = (-1 * $signal) * $carrier;
+
+  $pl->stripplots($x, [ $signal3, $signal2, $signal1, ],
+                      YLAB => [ '200%', '100%', '75%', ],
+                      COLOR => [qw/BLACK BLACK BLACK/]);
+
+  $pl->close();
+}

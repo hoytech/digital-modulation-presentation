@@ -81,21 +81,33 @@
 </div>
 
 
+
 <div class="slide">
-  <h1>Slightly Phase-Offset signals</h1>
-  The output includes two signals of slightly different frequency known as sidebands:
+  <h1>Diode Mixers</h1>
+  <ul>
+    <li>Diodes are <i>non-ohmic</i> conductors (<b>I &ne; V/R</b>)</li>
+    <li>By biasing signals into the indicated region, diodes <i>mix</i> (multiply) signals together</li>
+  </ul>
+  <center><img src="img/diode.svg"></center>
+</div>
+
+
+
+<div class="slide">
+  <h1>Sidebands</h1>
+  Amplitude Modulation results in two signals of slightly different frequencies known as <i>sidebands</i>:
   <center><img src="output/ask2.svg"></center>
 </div>
 
 <div class="slide">
-  <h1>Slightly Phase-Offset signals (overlayed)</h1>
-  Notice how the output is at its maximum when the sidebands are in phase and minimum when not (consider also guitar tuning):
+  <h1>Sidebands (overlayed)</h1>
+  Notice how the output is at its maximum when the sidebands are in phase and minimum when out of phase (consider also guitar tuning):
   <center><img src="output/ask2-1.svg"></center>
 </div>
 
 <div class="slide">
   <h1>Envelope</h1>
-  The original signal is present in the modulated signal as the "envelope". Note that it is shifted up above the X axis (raised):
+  The original signal is present in the modulated signal as the <i>envelope</i>. Note that it is shifted up above the X axis ("raised"):
   <center><img src="output/ask2-2.svg"></center>
 </div>
 
@@ -107,8 +119,7 @@
 
   <ul>
     <li>Morse code is one of the earliest digital modes</li>
-    <li>Known to hams as CW ("Continuous Wave")</li>
-    <li>Not actually a continuous wave since it is constantly being interrupted</li>
+    <li>Known to hams as CW ("Continuous Wave") as opposed to ancient spark-gap transmitters which did not generate continuous waves</li>
     <li>Conceptually an oscillator that is turned on and off by a manually-operated switch (a "key")</li>
   </ul>
   <center><img src="img/cw.svg"></center>
@@ -117,7 +128,7 @@
 
 <div class="slide">
   <h1>Amplitude Modulation of a digital signal</h1>
-  A simplistic implementation of amplitude-shift keying is on-off keying:
+  A simplistic implementation of amplitude-shift keying is <i>on-off keying</i>:
   <center><img src="output/ask3.svg"></center>
 </div>
 
@@ -129,65 +140,57 @@
 </div>
 
 
-<div class="slide">
-  <h1>Demo: on-off keyed morse code</h1>
-  This demo shows a hard-keyed morse code transmission (open fldigi):
-  <pre>
-    perl -I lib -MPDL::Sound -e '$s=PDL::Sound->new; $s->play("cw", 1000, 15, "CQ CQ CQ DE VE3HOY "x10)'
-  </pre>
-</div>
 
+<div class="slide">
+  <h1>CW Shaping</h1>
+  <ul>
+    <li>Because on-off keying is spectrally inefficient/impolite, "smoother" keying envelopes should be used</li>
+    <li>Keying hardware has traditionally used RC filters (exponential) because they are simple to implement</li>
+    <li>Gaussian (sinusoidal) envelopes are the smoothest</li>
+  </ul>
+</div>
 
 
 <div class="slide">
   <h1>Keying Waveform Shaping</h1>
-  What we need is a way to soften those hard square wave edges:
+  We need to soften those hard square wave edges
   <center><img src="output/shaping1.svg"></center>
 </div>
 
 
 <div class="slide">
   <h1>Keying Envelope Steepness</h1>
-  The key shaping function can be thought of as an envelope.<br>
   The steeper we make it, the closer it becomes to a square wave pulse
   <center><img src="output/shaping2.svg"></center>
 </div>
 
 
 <div class="slide">
-  <h1>CW Shaping</h1>
-  <ul>
-    <li>For hams, how nicely you have shaped your keying envelope contributes to your <i>tone</i></li>
-    <li>Keying hardware has traditionally used RC filters because they are simple to implement</li>
-    <li>RC filters have exponential envelopes instead of gaussian (sinusoidal) envelopes so they have sharper edges (but still much smoother than square wave envelopes)</li>
-  </ul>
-</div>
+  <h1>Demo: Morse code key shaping</h1>
 
+  On-off keyed morse code transmission:
+  <pre>
+    perl -I lib -MPDL::Sound -e '$s=PDL::Sound->new; $s->play("cw", 1000, 15, "CQ CQ CQ DE VE3HOY "x10)'
+  </pre>
 
-<div class="slide">
-  <h1>gaussian minimum shift keying</h1>
-  If the rise and fall edges of a square wave are shaped to the same sinusoidal keying waveform, this is referred to as <i>gaussian minimum shift keying</i> &mdash; the same thing as amplitude modulating a sine wave signal
-  <center><img src="output/ask2-2.svg"></center>
-</div>
-
-
-<div class="slide">
-  <h1>Demo: GMSK morse code</h1>
   This demo shows gaussian minimum-shift keyed morse code transmission:
   <pre>
     perl ...
   </pre>
-  This demo shows 5ms gaussian smoothed morse code transmission:
+
+  This demo shows 5ms (200 Hz) gaussian smoothed morse code transmission:
   <pre>
     perl ...
   </pre>
 </div>
+
+
 
 
 <div class="slide">
   <h1>CW Bandwidth</h1>
   <ul>
-    <li>An unmodulated carrier wave contains no information and consumes no bandwidth (!)</li>
+    <li>An unmodulated carrier wave contains no information and consumes no bandwidth</li>
     <li>Therefore, the bandwidth consumed by a CW transmission depends solely on the keying envelope used</li>
     <li>Recall from the Amplitude Modulation slides that sinusoidal envelopes create two "sideband" signals of slightly different frequencies</li>
     <li>The bandwidth consumed is the frequency difference between the sidebands created by the keying envelope</li>
@@ -207,24 +210,55 @@
   <div><center><img src="img/modem-spectrum.jpg"></center></div>
 </div>
 
+<div class="slide">
+  <h1>FSK</h1>
+  <ul>
+    <li>Conceptually, FSK alternates between two oscillators of different frequencies</li>
+  </ul>
+
+  <div><center><img src="img/fsk.svg"></center></div>
+</div>
 
 <div class="slide">
   <h1>RTTY</h1>
 
   <ul>
     <li>RTTY (Radio-Teletype) is a very old FSK mode that printed digital messages out onto paper</li>
-    <li>Uses the 5-bit Baudot encoding which predates ASCII by many decades</li>
+    <li>Uses the 5-bit Baudot encoding invented in 1870 (origin of the word "baud")</li>
     <li>Has a "shift to figures" character that changes what the codes mean so numbers and punctuation can be sent, and of course a "shift back to letters" character</li>
     <li>Still common on amateur bands</li>
   </ul>
 <div>
 
+
+<div class="slide">
+  <h1>RTTY</h1>
+  <ul>
+    <li>The higher frequency signal indicates a 1 and the lower indicates a 0</li>
+    <li>If transmitted on lower sideband output at antenna will be inverse of audio</li>
+    <li>RTTY uses constant power so doesn't require a linear amplifier</li>
+  </ul>
+</div>
+
+
 <div class="slide">
   <h1>Phase-shift keying</h1>
+  <ul>
+    <li>Phase-shift keying is a type of angle modulation</li>
+    <li>Pure PSK modifies the phase of a carrier but preserves amplitude and frequency</li>
+    <li>Conceptually, phase-shift keying instantly switches between two or more out-of-phase but otherwise equivalent oscillators</li>
+  </ul>
+
+  <div><center><img src="img/psk2.svg"></center></div>
+</div>
+
+
+
+<div class="slide">
+  <h1>Abrupt phase shifts</h1>
 
   <ul>
-    <li>PSK involves modifying the phase of a carrier but preserving the amplitude and frequency</li>
-    <li>This is an abrupt 180 degree phase-shift:</li>
+    <li>Abrupt 180 degree phase-shifts are twice as bad as on-off keying because they are like simultaneously keying off one signal and keying on another</li>
   </ul>
 
   <div><center><img src="output/psk.svg"></center></div>
@@ -292,19 +326,6 @@
 
 
 
-<!-- FIXME
-<div class="slide">
-  <h1>Differential Binary PSK (2)</h1>
-
-  <ul>
-    <li></li>
-  </ul>
-
-  <center><img src="output/differential.svg"></center>
-</div>
--->
-
-
 
 
 <div class="slide">
@@ -325,6 +346,7 @@
   <ul>
     <li>Several variations available but by far most commonly used is known as PSK-31 (technically DBPSK-31.25)</li>
     <li>Differential Binary Phase-Shift Keying at 31.25 baud</li>
+    <li>As we will see, also uses a form of amplitude modulation</li>
     <li>Roughly as fast as most people type</li>
     <li>31.25 is convenient when using a sample rate of 8000 because the key shaping waveform has a nice even period of 256 samples (32 milliseconds)</li>
   </ul>
@@ -361,8 +383,26 @@
   </ul>
 </div>
 
+<div class="slide">
+  <h1>...</h1>
+  <ul>
+    <li>RTTY has constant power unlike CW (and PSK-31)</li>
+    <li>BPSK-31 is sideband independent</li>
+    <li>Peak power of PSK-31 is about 2 times more than average power: requires linear amplifier</li>
+  </ul>
+</div>
 
 
+
+<div class="slide">
+  <h1>Modulation percentage</h1>
+
+  <ul>
+    <li>PSK-31 can also be thought of as a 31.25 Hz signal that is amplitude modulated by 200%</li>
+    <li>At 200% modulation, the envelope is full-wave rectified 31.25 Hz AC</li>
+  </ul>
+  <center><img src="output/modulation-pct.svg"></center>
+</div>
 
 
 
