@@ -104,7 +104,7 @@ mkdir('output/');
   my $sum = $fund + $h3 + $h5;
 
   $pl->stripplots($x, [ $sum, $h5, $h3, $fund ],
-                      YLAB => [ 'Square', '5th', '3rd', 'Fund', ],
+                      YLAB => [ 'Sum', '5th', '3rd', 'Fund', ],
                       BOX => [0, 10, -1, 1],
                       COLOR => [qw/BLUE GREEN RED BLACK/]);
 
@@ -215,20 +215,19 @@ mkdir('output/');
 
 
 
+
+
+
 {
-  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/modulation-pct.svg');
-  my $x = sequence(1000)/100;
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/sinc.svg');
+  my $x = (sequence(1000) - 500)/20;
 
-  my $signal = sin(2 * $x);
-  my $carrier = sin(50 * $x);
+  my $s1 = cos($x);
+  my $s2 = sin($x) / $x;
 
-  my $signal1 = (0.25 * $signal + 0.5) * $carrier;
-  my $signal2 = (0.5 * $signal + 0.5) * $carrier;
-  my $signal3 = (-1 * $signal) * $carrier;
-
-  $pl->stripplots($x, [ $signal3, $signal2, $signal1, ],
-                      YLAB => [ '200%', '100%', '75%', ],
-                      COLOR => [qw/BLACK BLACK BLACK/]);
+  $pl->xyplot($x, $s1, COLOR => 'BLACK', MAJTICKSIZE=>0, MINTICKSIZE=>0, XBOX=>'', YBOX=>'');
+  $pl->xyplot($x, zeroes(1000), COLOR => 'BLACK');
+  $pl->xyplot($x, $s2, COLOR => 'RED', LINEWIDTH => 3);
 
   $pl->close();
 }
