@@ -69,7 +69,7 @@ mkdir('output/');
   my $am = $signal * $carrier;
 
   $pl->xyplot($x, $am, COLOR => 'BLACK');
-  $pl->xyplot($x, $signal, COLOR => 'RED');
+  $pl->xyplot($x, $signal, COLOR => 'RED', LINEWIDTH => 3);
 
   $pl->close();
 }
