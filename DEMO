@@ -1,0 +1,48 @@
+play basic:
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::Sine->new(freq => 500)->play(5)'
+
+plot basic:
+perl -I lib -MPDL::Radio::All -E 'plot(PDL::Radio::Sine->new(freq => 50)->get(.1))'
+
+
+
+
+
+unsmoothed phase-shifts:
+
+perl -I lib -MPDL::Radio::All -E 'while(1) { PDL::Radio::Sine->new->play(1)->play(1,PI) }'
+
+
+
+
+CW:
+
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::CW->new->play("CQ CQ CQ DE VE3HOY VE3HOY " x 10)'
+
+
+
+RTTY:
+
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::RTTY->new->play("CQ CQ CQ DE VE3HOY VE3HOY " x 10)'
+
+
+
+PSK31:
+
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::PSK->new->play("cq cq cq de VE3HOY VE3HOY " x 10)'
+
+PSK31 all 0s/1s:
+
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::PSK->new->play("\x00"x100, 800)'
+perl -I lib -MPDL::Radio::All -E 'PDL::Radio::PSK->new->play("\xFF"x100, 800)'
+
+
+
+
+
+
+TODO:
+
+Implement switch to figures in RTTY
+
+Variable hardness keying envelope shapes in CW
