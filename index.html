@@ -155,8 +155,9 @@
 <div class="slide">
   <h1>Demo: Harmonics</h1>
   <ul>
+    <li>This presentation uses fldigi (more details later) and my module PDL::Radio</li>
     <li>Show waterfall output of a pure sine wave, a square wave, and a sawtooth wave</li>
-    <li>Even harmonics indicate asymmetry across the X-axis</li>
+    <li>Even harmonics indicate asymmetry around the X-axis</li>
   </ul>
 </div>
 
@@ -183,7 +184,7 @@
     <li>An unmodulated carrier wave contains no information and consumes no bandwidth: The bandwidth consumed by a CW transmission depends solely on the keying envelope used</li>
     <li>Recall that sinusoidal envelopes create two "sideband" signals of slightly different frequencies</li>
     <li>The bandwidth consumed is the frequency difference between the sidebands created by the keying envelope</li>
-    <li>CW keying hardware has traditionally used RC filters (exponential) because they are simple to implement and harmonics are actually required to <i>copy</i> reliably</li>
+    <li>CW keying hardware has traditionally used RC filters (exponential) because they are simple to implement and harmonics are actually desirable</li>
   </ul>
 </div>
 
@@ -216,7 +217,7 @@
   <ul>
     <li>"Hard" on-off keying</li>
     <li>"Soft" gaussian minimum-shift keying</li>
-    <li>"Nice" hanning keying (aka raised-cosine filtering)</li>
+    <li>"Nice" hanning (aka raised-cosine filtering)</li>
   </ul>
 </div>
 
@@ -255,8 +256,8 @@
 <div class="slide">
   <h1>FSK</h1>
   <ul>
-    <li>Conceptually, the simplest possible type of FSK is binary FSK (BFSK)</li>
-    <li>It alternates between two oscillators of different frequencies:</li>
+    <li>The simplest possible type of FSK is binary FSK (BFSK)</li>
+    <li>Conceptually, alternates between two oscillators of different frequencies:</li>
   </ul>
 
   <div><center><img src="img/fsk.svg"></center></div>
@@ -367,13 +368,8 @@
 
 
 
-
-
-
-
-
 <div class="slide">
-  <h1>PSK-31</h1>
+  <h1>PSK-31: A lot of fun</h1>
 
   <ul>
     <li>Popular ham mode: A world-wide chatroom &mdash; no internet required</li>
@@ -385,13 +381,12 @@
 
 
 <div class="slide">
-  <h1>PSK-31</h1>
+  <h1>PSK-31 Details</h1>
 
   <ul>
     <li>Several variations available but by far most commonly used is known as PSK-31 (technically DBPSK-31.25)</li>
     <li>Differential Binary Phase-Shift Keying at 31.25 baud (roughly as fast as most people type)</li>
-    <li>In a sense, also a form of amplitude modulation</li>
-    <li>Peak power of PSK-31 is about 2 times more than average power so a linear amplifier is required</li>
+    <li>Also uses a form of amplitude modulation: Peak power of PSK-31 is about 2 times more than average power so a linear amplifier is required</li>
     <li>31.25 is convenient when using a sample rate of 8000 because the key shaping waveform has a nice even period of 256 samples (32 milliseconds)</li>
   </ul>
 </div>
@@ -433,17 +428,25 @@
 
 
 <div class="slide">
-  <h1>PSK-31</h1>
+  <h1>PSK-31: Time Domain</h1>
 
   <ul>
     <li>Here is a PSK-31 signal relative to a phase-invariant carrier</li>
     <li>The message is 3 bits: <b>100</b></li>
-    <li>Another way to think of PSK-31 is a 200% over-modulated AM signal</li>
   </ul>
 
   <center><img src="output/psk2.svg"></center>
 </div>
 
+<div class="slide">
+  <h1>PSK-31 is Overmodulated AM</h1>
+
+  <ul>
+    <li>Another way to consider PSK-31 is a 200% over-modulated AM signal</li>
+  </ul>
+
+  <center><img src="output/modulation-pct.svg"></center>
+</div>
 
 
 <div class="slide">
@@ -509,10 +512,11 @@
   </b></center>
 
   <ul>
-    <li>Looking for a challenging and exciting new hobby? Interested in radio technology? Want to help your community in case of emergencies?</li>
-    <li>Get involved in amateur radio!</li>
+    <li>Looking for a challenging and exciting new hobby? Interested in radio technology? Want to be able to help your community in case of an emergency? <b>Get involved in amateur radio!</b></li>
     <li>Toronto Amateur Radio Club: <a href="http://www.torarc.ca">www.torarc.ca</a> (meetings are 3rd monday of the month)</li>
     <li>Radio Amateurs of Canada: <a href="http://www.rac.ca">www.rac.ca</a></li>
+    <li>fldigi: <a href="http://w1hkj.com/">w1hkj.com</a></li>
+    <li>PDL::Radio: <a href="https://github.com/hoytech/PDL-Radio">github.com/hoytech/PDL-Radio</a></li>
   </ul>
 </div>
 

@@ -236,7 +236,6 @@ mkdir('output/');
 
 
 {
-#perl -MPDL -MPDL::Radio::All -E '$sr=32000; $z = PDL::Radio::PSK->new(samplerate=>$sr)->get("\x00", 5); ->cat(0.1*sin(2*PI*sequence(256*6)*1000/$sr)))'
   use PDL::Radio::All;
 
   my $freq = 500;
@@ -254,4 +253,19 @@ mkdir('output/');
 
 
 
+{
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/modulation-pct.svg');
+  my $x = sequence(1000)/100;
 
+  my $signal = sin(2 * $x);
+  my $carrier = sin(50 * $x);
+
+  my $signal1 = (0.25 * $signal + 0.5) * $carrier * sqrt(2);
+  my $signal2 = (0.5 * $signal + 0.5) * $carrier;
+  my $signal3 = (-1 * $signal) * $carrier;
+
+  $pl->stripplots($x, [ $signal3, $signal2, $signal1, ],
+                      YLAB => [ '200%', '100%', '75%', ],
+                      COLOR => [qw/RED BLACK BLACK/]);
+  $pl->close();
+}
