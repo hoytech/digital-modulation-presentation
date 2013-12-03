@@ -231,3 +231,27 @@ mkdir('output/');
 
   $pl->close();
 }
+
+
+
+
+{
+#perl -MPDL -MPDL::Radio::All -E '$sr=32000; $z = PDL::Radio::PSK->new(samplerate=>$sr)->get("\x00", 5); ->cat(0.1*sin(2*PI*sequence(256*6)*1000/$sr)))'
+  use PDL::Radio::All;
+
+  my $freq = 500;
+
+  my $pl = PDL::Graphics::PLplot->new(DEV => 'svg', PAGESIZE => [800,350], FILE => 'output/psk2.svg');
+
+  my $psk = PDL::Radio::PSK->new(freq => $freq)->get("\x01", 3);
+  my ($len) = $psk->dims;
+
+  $pl->xyplot(sequence($len), $psk, COLOR => 'BLACK', MAJTICKSIZE=>0, MINTICKSIZE=>0, XBOX=>'', YBOX=>'');
+  $pl->xyplot(sequence($len), 0.3 * sin(2*PI*sequence($len)*$freq/8000), COLOR => 'RED', MAJTICKSIZE=>0, MINTICKSIZE=>0, XBOX=>'', YBOX=>'');
+  $pl->close();
+}
+
+
+
+
+

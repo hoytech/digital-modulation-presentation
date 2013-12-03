@@ -167,7 +167,7 @@
   <h1>Frequency response of a pulse</h1>
 
   <ul>
-    <li>The fourier transform of a square wave pulse is <i>sinc(x) = sin(x)/x</i> </li>
+    <li>The fourier transform of a square wave pulse is <i>sinc(x) = sin(&pi;&sdot;x)/&pi;&sdot;x</i> </li>
     <li>The wider the pulse, the narrower the frequency response</li>
   </ul>
   <center><img src="img/sinc.svg"></center>
@@ -213,22 +213,12 @@
 <div class="slide">
   <h1>Demo: Morse code key shaping</h1>
 
-  On-off keyed morse code transmission:
-  <pre>
-    perl -I lib -MPDL::Sound -e '$s=PDL::Sound->new; $s->play("cw", 1000, 15, "CQ CQ CQ DE VE3HOY "x10)'
-  </pre>
-
-  This demo shows gaussian minimum-shift keyed morse code transmission:
-  <pre>
-    perl ...
-  </pre>
-
-  This demo shows 5ms (200 Hz) gaussian smoothed morse code transmission:
-  <pre>
-    perl ...
-  </pre>
+  <ul>
+    <li>"Hard" on-off keying</li>
+    <li>"Soft" gaussian minimum-shift keying</li>
+    <li>"Nice" hanning keying (aka raised-cosine filtering)</li>
+  </ul>
 </div>
-
 
 
 <div class="slide">
@@ -341,7 +331,7 @@
   <h1>Constellation diagrams</h1>
 
   <ul>
-    <li>The phase properties of a signal are commonly shown on a complex plane called the "I-Q" plane</li>
+    <li>The phase properties of a signal are commonly shown on a complex plane called the <i>I-Q plane</i></li>
     <li>All points on the circle represent signals of the same power output so any purely phase-modulated signal must only use symbols on this circle</li>
   </ul>
 
@@ -376,16 +366,6 @@
 
 
 
-<div class="slide">
-  <h1>Quadrature PSK</h1>
-
-  <ul>
-    <li><i>Quadrature</i> phase-shift keying uses more symbols than binary PSK</li>
-    <li>Unlike binary PSK it uses the Q axis (Quadrature axis) as well as the I axis (In-Phase axis)</li>
-  </ul>
-
-  <center><img src="img/qpsk.svg"></center>
-</div>
 
 
 
@@ -421,7 +401,7 @@
   <h1>Varicode</h1>
 
   <ul>
-    <li>PSK-31 uses a custom encoding called "varicode"</li>
+    <li>PSK-31 uses a custom encoding called <i>varicode</i></li>
     <li>Like morse code, frequently used symbols have shorter encodings than rare symbols</li>
     <li>Encoded symbols never contain adjacent 0s (the character separator)</li>
     <li>Self-synchronizing: if you lose your place in a stream you can re-synchronize at the next character (like UTF-8)</li>
@@ -444,8 +424,24 @@
   <h1>Raised cosine shaping</h1>
 
   <ul>
-    <li></li>
+    <li>In order to soften the phase shifts, the signal is passed through a <i>raised cosine filter</i></li>
   </ul>
+
+  <center><img src="img/raisedcosine.svg"></center>
+</div>
+
+
+
+<div class="slide">
+  <h1>PSK-31</h1>
+
+  <ul>
+    <li>Here is a PSK-31 signal relative to a phase-invariant carrier</li>
+    <li>The message is 3 bits: <b>100</b></li>
+    <li>Another way to think of PSK-31 is a 200% over-modulated AM signal</li>
+  </ul>
+
+  <center><img src="output/psk2.svg"></center>
 </div>
 
 
@@ -458,6 +454,20 @@
     <li>String of 0s (phase shifts)</li>
     <li>String of 1s (no phase shifts)</li>
   </ul>
+</div>
+
+
+
+
+<div class="slide">
+  <h1>Quadrature PSK</h1>
+
+  <ul>
+    <li><i>Quadrature</i> phase-shift keying uses more symbols than binary PSK</li>
+    <li>Unlike binary PSK it uses the Q axis (Quadrature axis) as well as the I axis (In-Phase axis)</li>
+  </ul>
+
+  <center><img src="img/qpsk.svg"></center>
 </div>
 
 
